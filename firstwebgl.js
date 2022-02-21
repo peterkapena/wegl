@@ -6,19 +6,11 @@ if (!webgl) {
   throw new Error("WebGL not available/supported");
 }
 
-webgl.clearColor(0, 1.0, 0, 1);
+webgl.clearColor(0.5, 0.5, 0.5, 0.7);
 
 webgl.clear(webgl.COLOR_BUFFER_BIT);
 
-const vertices = new Float32Array([
-  0.5, 0.5, 1.0, 0.5, 1.0, 1.0,
-
-  -1.0, 1.0, -0.5, 0.5, -1.0, 0.5,
-
-  -1.0, 1.0, -0.5, 0.5, -.5, 1,
-
-  0, 1, -1, -1, 1, -1,
-]);
+const vertices = new Float32Array(getValues(16));
 
 const buffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, buffer);
@@ -54,4 +46,21 @@ const positionLocation = webgl.getAttribLocation(program, "pos");
 webgl.enableVertexAttribArray(positionLocation);
 webgl.vertexAttribPointer(positionLocation, 2, webgl.FLOAT, false, 0, 0);
 webgl.useProgram(program);
-webgl.drawArrays(webgl.TRIANGLES, 0, vertices.length / 2);
+webgl.drawArrays(webgl.TRIANGLE_FAN, 0, vertices.length / 2);
+
+function getValues(numberOfSides) {
+  if (!numberOfSides) throw new Error("Please specify the number of sides");
+  
+  const r = 0.5;
+  let values = [0.0, 0.0, r, 0.0];
+  
+  for (let index = 1; index < numberOfSides + 1; index++) {
+    values = [
+      ...values,
+      r * Math.cos((index * Math.PI) / 4),
+      r * Math.sin((index * Math.PI) / 4),
+    ];
+  }
+
+  return values;
+}
