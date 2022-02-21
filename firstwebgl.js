@@ -10,7 +10,15 @@ webgl.clearColor(0, 1.0, 0, 1);
 
 webgl.clear(webgl.COLOR_BUFFER_BIT);
 
-const vertices = new Float32Array([0, 1, -1, -1, 1, -1]);
+const vertices = new Float32Array([
+  0.5, 0.5, 1.0, 0.5, 1.0, 1.0,
+
+  -1.0, 1.0, -0.5, 0.5, -1.0, 0.5,
+
+  -1.0, 1.0, -0.5, 0.5, -.5, 1,
+
+  0, 1, -1, -1, 1, -1,
+]);
 
 const buffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, buffer);
@@ -46,4 +54,4 @@ const positionLocation = webgl.getAttribLocation(program, "pos");
 webgl.enableVertexAttribArray(positionLocation);
 webgl.vertexAttribPointer(positionLocation, 2, webgl.FLOAT, false, 0, 0);
 webgl.useProgram(program);
-webgl.drawArrays(webgl.TRIANGLES, 0, 3);
+webgl.drawArrays(webgl.TRIANGLES, 0, vertices.length / 2);
