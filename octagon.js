@@ -1,7 +1,7 @@
 function getValues(numberOfSides) {
     if (!numberOfSides) throw new Error("Please specify the number of sides");
     
-    const r = 0.5;
+    const r = 0.3;
     let values = [0.0, 0.0, r, 0.0];
     
     for (let index = 1; index < numberOfSides + 1; index++) {
